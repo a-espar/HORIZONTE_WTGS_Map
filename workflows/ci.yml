@@ -31,3 +31,10 @@ jobs:
         run: |
           echo "Using API key in Node.js script"
           node script.js
+
+              
+      # 5. Upload build artifacts to GitHub Pages
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./public
