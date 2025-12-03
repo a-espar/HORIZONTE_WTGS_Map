@@ -60,7 +60,8 @@
     });
     
      // Fetch the API key from the backend
-      const apiKey = ${{ secrets.API_KEY_1 }};
+      const apiKey = process.env.API_KEY_1;
+      console.log(`API Key: ${apiKey}`);
       const inventoryUrl = `https://maps-api.meteoblue.com/v1/map/inventory/filter?lang=es&apikey=${apiKey}&maps=windAnimation,wind,cloudsAndPrecipitation,temperature,gust,humidity,warningsAndRisk&temperatureUnit=CELSIUS&velocityUnit=METER_PER_SECOND&lengthUnit=metric&overlays=pressure2mOverlay,graticuleOverlay`;
 
       new meteoblueMapsPlugin({
