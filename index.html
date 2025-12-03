@@ -60,10 +60,7 @@
     });
     
      // Fetch the API key from the backend
-  fetch("/api-key")
-    .then(res => res.json())
-    .then(data => {
-      const apiKey = data.apiKey;
+      const apiKey = ${{ secrets.API_KEY_1 }};
       const inventoryUrl = `https://maps-api.meteoblue.com/v1/map/inventory/filter?lang=es&apikey=${apiKey}&maps=windAnimation,wind,cloudsAndPrecipitation,temperature,gust,humidity,warningsAndRisk&temperatureUnit=CELSIUS&velocityUnit=METER_PER_SECOND&lengthUnit=metric&overlays=pressure2mOverlay,graticuleOverlay`;
 
       new meteoblueMapsPlugin({
@@ -75,8 +72,6 @@
         autoplay: true,
         canUseRestricted: true,
       });
-    });
-
     // Wind turbine marker
     // Coordinates for 5 wind turbines
     const turbineCoordinates = [
