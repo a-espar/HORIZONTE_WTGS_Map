@@ -59,7 +59,7 @@
       maxBounds: [[-69.989217, -25.052451], [-69.684616, -24.866181]]
     });
 
-    const apiKey = process.env.API_KEY.;
+    const apiKey = ${{ secrets.API_KEY_1 }}.;
     const inventoryUrl = `https://maps-api.meteoblue.com/v1/map/inventory/filter?lang=es&apikey=${apiKey}&maps=windAnimation,radar,cloudsAndPrecipitation,temperature,wind,gust,humidity,warningsAndRisk&temperatureUnit=CELSIUS&velocityUnit=METER_PER_SECOND&lengthUnit=metric&overlays=pressure2mOverlay,graticuleOverlay`;
     
     new meteoblueMapsPlugin({
