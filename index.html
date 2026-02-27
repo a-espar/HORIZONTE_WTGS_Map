@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=3072, initial-scale=1.0">
 <title>Horizonte Wind Farm</title>
 
 <link rel="stylesheet"
@@ -12,60 +12,46 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    background: #ffffff;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
+/* Fixed resolution */
 #map {
-    height: 700px;
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    width: 3072px;
+    height: 1620px;
+    margin: 0 auto;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="map"></div>
-</div>
+<div id="map"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-// Corrected bounds (lat, lng)
-const bounds = L.latLngBounds(
-    [-25.052451, -69.989217],  // SouthWest
-    [-24.866181, -69.684616]   // NorthEast
+// Fixed center (computed from original bounds)
+const center = [-24.959316, -69.8369165];
+
+// Expanded bounds
+const expandedBounds = L.latLngBounds(
+    [-25.15, -70.10],   // SouthWest
+    [-24.75, -69.55]    // NorthEast
 );
 
-// Fixed zoom level (~17 km vertical span ≈ 10.82 miles)
-const FIXED_ZOOM = 12;
+// Zoom limits
+const MIN_ZOOM = 11;   // prevents too many km
+const MAX_ZOOM = 17;   // allow zoom in for detail
 
-// Center calculated from bounds
-const center = bounds.getCenter();
-
-// Initialize map with zoom disabled
 const map = L.map('map', {
     center: center,
-    zoom: FIXED_ZOOM,
-    minZoom: FIXED_ZOOM,
-    maxZoom: FIXED_ZOOM,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    boxZoom: false,
-    keyboard: false,
-    dragging: true,              // allow panning inside bounds
-    touchZoom: false,
-    zoomControl: false,
-    maxBounds: bounds,
-    maxBoundsViscosity: 1.0
+    zoom: 12,
+    minZoom: MIN_ZOOM,
+    maxZoom: MAX_ZOOM,
+    maxBounds: expandedBounds,
+    maxBoundsViscosity: 1.0,
+    zoomControl: true
 });
 
 // Roadmap tiles
