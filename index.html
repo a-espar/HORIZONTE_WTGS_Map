@@ -39,21 +39,34 @@ html, body {
 
 <script>
 
-// Corrected bounds (Leaflet format: [lat, lng])
+// Corrected bounds (lat, lng)
 const bounds = L.latLngBounds(
-    [-25.052451, -69.989217], // SouthWest
-    [-24.866181, -69.684616]  // NorthEast
+    [-25.052451, -69.989217],  // SouthWest
+    [-24.866181, -69.684616]   // NorthEast
 );
 
-// Initialize map
-const map = L.map('map', {
-    maxBounds: bounds,
-    maxBoundsViscosity: 1.0,   // Prevent dragging outside
-    zoomControl: true
-});
+// Fixed zoom level (~17 km vertical span ≈ 10.82 miles)
+const FIXED_ZOOM = 12;
 
-// Fit map to bounds (~16 km view depending on container size)
-map.fitBounds(bounds);
+// Center calculated from bounds
+const center = bounds.getCenter();
+
+// Initialize map with zoom disabled
+const map = L.map('map', {
+    center: center,
+    zoom: FIXED_ZOOM,
+    minZoom: FIXED_ZOOM,
+    maxZoom: FIXED_ZOOM,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    dragging: true,              // allow panning inside bounds
+    touchZoom: false,
+    zoomControl: false,
+    maxBounds: bounds,
+    maxBoundsViscosity: 1.0
+});
 
 // Roadmap tiles
 L.tileLayer(
