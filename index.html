@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Horizonte with Weather</title>
+<title>Horizonte Wind Farm</title>
 
 <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
@@ -12,42 +12,57 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
 #map {
     height: 700px;
     width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 </style>
 </head>
 <body>
 
-<div id="map"></div>
+<div class="container">
+    <div id="map"></div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-const horizonte = [-25.10, -70.45];
-const map = L.map('map').setView(horizonte, 12);
 
-// Base map (roadmap)
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors'
-}).addTo(map);
-
-// OpenWeatherMap weather layer
-const apiKey = "YOUR_API_KEY";  // replace with your OWM key
-
-const windLayer = L.tileLayer(
-  `https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${apiKey}`,
-  {
-    attribution: '&copy; OpenWeatherMap contributors',
-    opacity: 0.6
-  }
+// Corrected bounds (Leaflet format: [lat, lng])
+const bounds = L.latLngBounds(
+    [-25.052451, -69.989217], // SouthWest
+    [-24.866181, -69.684616]  // NorthEast
 );
 
-windLayer.addTo(map);
+// Initialize map
+const map = L.map('map', {
+    maxBounds: bounds,
+    maxBoundsViscosity: 1.0,   // Prevent dragging outside
+    zoomControl: true
+});
+
+// Fit map to bounds (~16 km view depending on container size)
+map.fitBounds(bounds);
+
+// Roadmap tiles
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }
+).addTo(map);
 
 </script>
 
