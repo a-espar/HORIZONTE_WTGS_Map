@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Horizonte Wind Farm</title>
+<title>Horizonte with Weather</title>
 
 <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
@@ -16,53 +16,39 @@ html, body {
 }
 
 #map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
+    height: 700px;
     width: 100%;
-}
-
-.info-box {
-    position: absolute;
-    top: 15px;
-    left: 60px;
-    background: white;
-    padding: 10px 15px;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    z-index: 1000;
-    font-family: Arial, sans-serif;
 }
 </style>
 </head>
 <body>
 
-<div class="info-box">
-    Parque Eólico Horizonte<br>
-    Antofagasta Region, Chile
-</div>
-
 <div id="map"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
 const horizonte = [-25.10, -70.45];
+const map = L.map('map').setView(horizonte, 12);
 
-const map = L.map('map').setView(horizonte, 11);
+// Base map (roadmap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
 
-L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
-    }
-).addTo(map);
+// OpenWeatherMap weather layer
+const apiKey = "YOUR_API_KEY";  // replace with your OWM key
 
-L.marker(horizonte)
- .addTo(map)
- .bindPopup("Parque Eólico Horizonte")
- .openPopup();
+const windLayer = L.tileLayer(
+  `https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${apiKey}`,
+  {
+    attribution: '&copy; OpenWeatherMap contributors',
+    opacity: 0.6
+  }
+);
+
+windLayer.addTo(map);
+
 </script>
 
 </body>
