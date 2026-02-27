@@ -1,87 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Horizonte Wind Farm Map</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizonte Wind Farm</title>
 
-    <!-- Leaflet CSS -->
-    <link 
-        rel="stylesheet" 
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
 
-        #map {
-            height: 100vh;
-            width: 100%;
-        }
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
 
-        .info-box {
-            position: absolute;
-            top: 10px;
-            left: 50px;
-            background: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            z-index: 1000;
-        }
-    </style>
+.info-box {
+    position: absolute;
+    top: 15px;
+    left: 60px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+}
+</style>
 </head>
 <body>
 
 <div class="info-box">
-    <b>Parque Eólico Horizonte</b><br>
+    Parque Eólico Horizonte<br>
     Antofagasta Region, Chile
 </div>
 
 <div id="map"></div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-    // Coordinates for Horizonte Wind Farm
-    const horizonte = [-25.10, -70.45];
+const horizonte = [-25.10, -70.45];
 
-    // Initialize map
-    const map = L.map('map', {
-        center: horizonte,
-        zoom: 11,
-        zoomControl: true
-    });
+const map = L.map('map').setView(horizonte, 11);
 
-    // Satellite basemap (Esri)
-    L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        {
-            attribution: 'Tiles © Esri'
-        }
-    ).addTo(map);
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }
+).addTo(map);
 
-    // Add marker
-    const marker = L.marker(horizonte).addTo(map);
-
-    marker.bindPopup(`
-        <b>Parque Eólico Horizonte</b><br>
-        Region: Antofagasta<br>
-        Country: Chile<br>
-        Type: Onshore Wind Farm
-    `).openPopup();
-
-    // Add circle area to highlight wind farm zone
-    L.circle(horizonte, {
-        radius: 5000,
-        color: "#00bfff",
-        fillColor: "#00bfff",
-        fillOpacity: 0.15
-    }).addTo(map);
+L.marker(horizonte)
+ .addTo(map)
+ .bindPopup("Parque Eólico Horizonte")
+ .openPopup();
 </script>
 
 </body>
