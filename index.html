@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=3072, initial-scale=1.0">
 <title>Horizonte Wind Farm</title>
 
 <link rel="stylesheet"
@@ -13,13 +12,14 @@ html, body {
     margin: 0;
     padding: 0;
     background: #ffffff;
+    display: flex;
+    justify-content: center;
 }
 
 /* Fixed resolution */
 #map {
     width: 3072px;
     height: 1620px;
-    margin: 0 auto;
 }
 </style>
 </head>
@@ -31,22 +31,23 @@ html, body {
 
 <script>
 
-// Fixed center (computed from original bounds)
-const center = [-24.959316, -69.8369165];
+// Exact center from your Google Maps link
+const center = [-24.9554759, -69.8536351];
 
-// Expanded bounds
+// Expanded bounds around the site
 const expandedBounds = L.latLngBounds(
-    [-25.15, -70.10],   // SouthWest
-    [-24.75, -69.55]    // NorthEast
+    [-25.25, -70.20],   // SouthWest
+    [-24.65, -69.45]    // NorthEast
 );
 
-// Zoom limits
-const MIN_ZOOM = 11;   // prevents too many km
-const MAX_ZOOM = 17;   // allow zoom in for detail
+// Zoom control
+const INITIAL_ZOOM = 12;  // ~11 km vertical span
+const MIN_ZOOM = 11;      // prevents too much zoom-out
+const MAX_ZOOM = 18;      // allow zoom-in for detail
 
 const map = L.map('map', {
     center: center,
-    zoom: 12,
+    zoom: INITIAL_ZOOM,
     minZoom: MIN_ZOOM,
     maxZoom: MAX_ZOOM,
     maxBounds: expandedBounds,
@@ -58,8 +59,8 @@ const map = L.map('map', {
 L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19
     }
 ).addTo(map);
 
